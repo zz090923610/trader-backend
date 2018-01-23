@@ -83,6 +83,16 @@ class TradeAPI:
                 self.respond(payload, res_type='img')
                 self.respond("TradeAPI/verify_image_sent")
 
+    def resend_verify_image(self):
+        try:
+            with open('/tmp/main-page.png', 'rb') as f:
+                image = f.read()
+                payload = bytearray(image)
+                self.respond(payload, res_type='img')
+                self.respond("TradeAPI/verify_image_sent")
+        except Exception as e:
+            pass
+
     def login_with_verify_code(self, verify_code):
         if 'action_login_with_verify_code' not in self.get_current_allowed_actions():
             self.respond("TradeAPI/StatusActionNotMatch:%s/%s" % (self.status, "action_login_with_verify_code"))

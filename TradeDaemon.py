@@ -48,6 +48,8 @@ class TradeDaemon(DaemonClass):
         elif payload == 'exit':
             self.cancel_daemon = True
             self.keep_heartbeat = False
+        elif payload == 'resend_verify_image':
+            self.trade_api.resend_verify_image()
         elif payload == 'sleep':
             self.keep_heartbeat = False
             self.trade_api.status = 'sleep'
