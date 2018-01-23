@@ -1,7 +1,8 @@
-from tools.communication.mqtt import simple_publish
+
 
 
 # DEP_APT( mosquitto mosquitto-clients )
+from tools.daemon_class import simple_publish
 
 
 def logging(source, msg, method='mqtt'):

@@ -3,6 +3,13 @@ import threading
 import time
 import paho.mqtt.client as mqtt
 import paho.mqtt.publish as single_publish
+import paho.mqtt.publish as s_publish
+
+
+def simple_publish(topic, payload, auth=None):
+    s_publish.single(topic, payload=payload, qos=0, retain=False, hostname="127.0.0.1",
+                     port=1883, client_id="", keepalive=60, will=None, auth=auth,
+                     tls=None, protocol=mqtt.MQTTv31)
 
 
 class DaemonClass:

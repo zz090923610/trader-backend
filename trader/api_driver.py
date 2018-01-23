@@ -4,6 +4,7 @@ from time import sleep
 import selenium.common.exceptions as SExceptions
 from selenium import webdriver
 
+from tools.daemon_class import simple_publish
 from tools.date_util.market_calendar_cn import MktCalendar
 from tools.io import logging
 
@@ -14,7 +15,7 @@ import trader.account_info as account
 
 status_dict = {'sleep': ['action_prelogin'],
                'wait_verify_code': ['action_login_with_verify_code','action_prelogin'],
-               'active': ['action_buy', 'action_sell', 'action_cash', 'action_heart_beat','action_prelogin']}
+               'active': ['action_buy', 'action_sell', 'action_cash', 'action_heart_beat']}
 
 
 class TradeAPI:
@@ -35,9 +36,13 @@ class TradeAPI:
 
     def respond(self, payload, res_type='str'):
         if self.on_server:
-            from tools.communication.mqtt import simple_publish
             simple_publish("trade_res/%s" % res_type, payload, auth=self.auth)
         if res_type == "str":
+            logging("logging", payload, method=account.logging_method)
+
+    def log(self, payload):
+        if self.on_server:
+            simple_publish("trader_log", payload, auth=self.auth)
             logging("logging", payload, method=account.logging_method)
 
     # noinspection PyBroadException
