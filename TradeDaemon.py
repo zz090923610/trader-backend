@@ -6,7 +6,7 @@ import time
 from tools.daemon_class import DaemonClass
 from trader.account_info import AUTH
 from trader.api_driver import TradeAPI
-
+from tools.io import logging
 
 class TradeDaemon(DaemonClass):
     def __init__(self, topic_sub='trade_req', topic_pub='trade_res/str', auth=None, name="TradeDaemon"):
@@ -38,7 +38,7 @@ class TradeDaemon(DaemonClass):
 
     def mqtt_on_message(self, mqttc, obj, msg):
         payload = msg.payload.decode('utf8')
-        print("[ INCOMING REQ ] %s" % payload)
+        logging("INCOMING REQ", payload)
         if payload == 'prelogin':
             self.keep_heartbeat = False
             self.trade_api.pre_login()
