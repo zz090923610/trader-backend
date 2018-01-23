@@ -38,6 +38,7 @@ class TradeDaemon(DaemonClass):
 
     def mqtt_on_message(self, mqttc, obj, msg):
         payload = msg.payload.decode('utf8')
+        print("[ INCOMING REQ ] %s" % payload)
         if payload == 'prelogin':
             self.keep_heartbeat = False
             self.trade_api.pre_login()
