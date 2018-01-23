@@ -15,7 +15,7 @@ class TradeDaemon(DaemonClass):
         self.captcha_db = {}
         self.heart_thread = None
         self.keep_heartbeat = False
-        threading.Thread(target=self.status_report, daemon=True).start()
+        #threading.Thread(target=self.status_report, daemon=True).start()
 
     def heart_beat(self):
         self.keep_heartbeat = True
@@ -31,10 +31,10 @@ class TradeDaemon(DaemonClass):
                 self.keep_heartbeat = False
                 return
 
-    def status_report(self):
-        while not self.cancel_daemon:
-            self.trade_api.respond('TradeDaemon/status_%s' % self.trade_api.status)
-            time.sleep(1)
+    #def status_report(self):
+    #    while not self.cancel_daemon:
+    #        self.trade_api.respond('TradeDaemon/status_%s' % self.trade_api.status)
+    #        time.sleep(1)
 
     def mqtt_on_message(self, mqttc, obj, msg):
         payload = msg.payload.decode('utf8')
